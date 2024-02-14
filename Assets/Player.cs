@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
             rb.angularVelocity = 0f;
 
             //communicate the event to the game manager
-            gameManager.PlayerDeath(this);
+            gameManager.PlayerDeathNotify(this);
 
         }
     }

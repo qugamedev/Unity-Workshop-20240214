@@ -150,8 +150,10 @@ public class Game : MonoBehaviour
         //check the winning condition
         Asteroid[] asteroids = FindObjectsOfType<Asteroid>();
 
-        //  Destroy() takes effect at the end of the frame
+        // Destroy() takes effect at the end of the frame
         // hence cannot check that no asteroids exist from here.
+        // require other soln and that what's written below. using size == 0
+        // to indicate asteroid "death".
         bool stageClear = true;
         
         foreach (Asteroid a in asteroids)
@@ -167,43 +169,28 @@ public class Game : MonoBehaviour
         }
     }
     
-
-    //called by the player
-    public void PlayerDeath(Player player)
+    // player is notifying us.
+    public void PlayerDeathNotify(Player player)
     {
         explosionEffect.transform.position = player.transform.position;
         explosionEffect.gameObject.SetActive(true);
         explosionEffect.Play();
 
-        //disable the game object until respawn
         player.gameObject.SetActive(false);
-
-        //subtract lifes
         lives--;
-
-        //visualize on the interface
         livesText.text = lives.ToString();
-
-        //I need to play the sound from here because the spaceship and its audio source 
-        //is being destroyed
         audioSource.PlayOneShot(bigExplosionSound, 1);
 
-        //check game over condition
         if (lives <= 0)
-        {
             GameOver();
-        }
         else
-        {
-            //invoke calls a function by name after a delay of x seconds
+            // invoke calls a function by name after a delay in seconds
             Invoke("SpawnPlayer", respawnDelay);
-        }
     }
 
     public void GameOver()
     {
         gameOverUI.SetActive(true);
     }
-
 
 }
