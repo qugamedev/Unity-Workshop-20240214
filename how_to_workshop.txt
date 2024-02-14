@@ -1,0 +1,28 @@
+
+
+how to do the thing.
+
++ set the default script editor = go to preferences and then External Tools.
+
++ make an empty. call that the game. then attach the game script to it.
++ drag shit to it. give it the right prefabs so it knows how to spawn things.
++ try run that, it fails.
++ oh, there's a null reference.
++ make a canvas.
++ throw some TMP on there.
++ use the anchor and pivot stuff to position it nicely.
++ use the right TMP_Text in the source.
++ now we gotta assign gameOverUI.
++ make the camera bgrnd black.
++ finding that explosionEffect does not exist.
+	+ create particle thing. then notice that circle shape is in the 3d space.
+	+ how to rotate? go to the left thing and then there is the rotate button.
+	+ oh nvm, if I just check the transform properties, find that I can reset. then it's good.
++ there was no .SetActive unless I accessed the GameObject directly. that was quite odd,
+  I thought it would have went and did the thing where it does inheritance, but no.
+
+
+TODO:
+- player is not that responsive.
+- there are too many comments in the code, and the code is bad.
+- the coarse collision is really not that good.
