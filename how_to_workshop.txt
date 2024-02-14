@@ -20,6 +20,9 @@ how to do the thing.
 	+ oh nvm, if I just check the transform properties, find that I can reset. then it's good.
 + there was no .SetActive unless I accessed the GameObject directly. that was quite odd,
   I thought it would have went and did the thing where it does inheritance, but no.
++ what you end up doing for the post-processing thing is to create a volume in the world
+  and put that on its own layer, post layer.
++ then you create the layer on the camera. you link that with the layer that the volume is.
 
 
 TODO:
