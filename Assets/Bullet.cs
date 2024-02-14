@@ -12,8 +12,6 @@ public class Bullet : MonoBehaviour
         if(rigidbody == null)
             rigidbody = GetComponent<Rigidbody2D>();
 
-        // The bullet only needs a force to be added once since they have no
-        // drag to make them stop moving
         rigidbody.AddForce(transform.up * speed);
     }
 
