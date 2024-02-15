@@ -6126,7 +6126,6 @@ GameObject:
   - component: {fileID: 478737809213256253}
   - component: {fileID: 478737809213256255}
   - component: {fileID: 478737809213256254}
-  - component: {fileID: 478737809213256226}
   - component: {fileID: 478737809213256227}
   - component: {fileID: 478737809213256249}
   - component: {fileID: 478737809213256248}
@@ -6138,33 +6137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &478737809213256226
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478737809213256224}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.5
-  m_LinearDrag: 2
-  m_AngularDrag: 5
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &478737809213256227
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6220,11 +6192,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 73f123fe5b04d0646b709615804f7a33, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -6494,23 +6466,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686478718328bd348915c5d05a5a0e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   bulletPrefab: {fileID: 1516617292126257879, guid: d8d55dfacb762f64cbf4c05cc402a4de,
     type: 3}
-  animator: {fileID: 0}
-  gameManager: {fileID: 0}
-  thrustSpeed: 200
-  maxSpeed: 20
-  rotationSpeed: 200
-  maxAngularVelocity: 100
-  invulnerability: 2
+  maxSpeed: 3
+  dragCoeff: 4
+  thrustCoeff: 23
+  rotateThrustCoeff: 3.1
   respawnPoint: {x: 0, y: 0}
+  invulnerability: 2
   HORIZONTAL_AXIS: Horizontal
   VERTICAL_AXIS: Vertical
   FIRE: Fire1
-  engineAudioSource: {fileID: 478737809213256249}
-  effectsAudioSource: {fileID: 478737809213256248}
-  thrustSound: {fileID: 8300000, guid: 73f123fe5b04d0646b709615804f7a33, type: 3}
+  effectsAudioSource: {fileID: 478737809213256249}
+  thrustSounder: {fileID: 478737809213256248}
   fireSound: {fileID: 8300000, guid: f3a16dfdb1b655c4fa0272251e868081, type: 3}
 --- !u!95 &8751731552583707353
 Animator:

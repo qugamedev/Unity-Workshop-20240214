@@ -2,17 +2,18 @@
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rb;
     public GameObject bulletPrefab;
-    public Animator animator;
     
     private Game gameManager;
 
-    public float thrustSpeed;
-    public float maxSpeed;
-    public float rotationSpeed;
-    public float maxAngularVelocity;
+    public float maxSpeed = 3;
+    public float dragCoeff = 4f;
+    public float thrustCoeff = 23f;
+    public float rotateThrustCoeff = 3.1f;
     public Vector2 respawnPoint;
+
+    Vector3 velocity = new Vector3(0, 0, 0); // has units of 1unit/s.
+    float playerRot = 0.0f; // in radians.
 
     [HideInInspector]
     public float invulnerability;
@@ -23,52 +24,49 @@ public class Player : MonoBehaviour
     public string FIRE = "Fire1";
 
     //to control engine sound and effects independently I use two audio sources
-    public AudioSource engineAudioSource;
     public AudioSource effectsAudioSource;
 
-    public AudioClip thrustSound;
+    public AudioSource thrustSounder;
     public AudioClip fireSound;
 
     private void Awake()
     {
-        if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
-
-        if (animator == null)
-            animator = GetComponent<Animator>();
-
         gameManager = FindObjectOfType<Game>();
 
-        //the thrust sound is always looping and the sound is turn on or off.
-        engineAudioSource.clip = thrustSound;
-        engineAudioSource.loop = true;
-        engineAudioSource.Play();
-        engineAudioSource.volume = 0;
+        // the audio source is always going to be looping, but we just toggle the volume
+        // when we want to hear it.
+        thrustSounder.volume = 0;
     }
-
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxisRaw(HORIZONTAL_AXIS);
-        float verticalInput = Input.GetAxisRaw(VERTICAL_AXIS);
+        //Input.GetAxis(); // unity will smooth things.
+        float horziontalInput = Input.GetAxisRaw("Horizontal"); // unity won't touch the input.
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
-        rb.AddTorque(rotationSpeed * -horizontalInput * Time.deltaTime);
+        Vector3 velocityDirAndMag = Vector3.ClampMagnitude( velocity, 1.0f );
 
-        if (verticalInput > 0)
-        {
-            rb.AddForce(transform.up * thrustSpeed * verticalInput * Time.deltaTime);            
-            engineAudioSource.volume = 1;
-            animator.Play("thrust");
+        velocity -= velocityDirAndMag*dragCoeff * Time.deltaTime; // apply drag.
+
+        if (horziontalInput != 0.0f)
+            playerRot += -rotateThrustCoeff * Time.deltaTime * Mathf.Sign(horziontalInput);
+
+        Vector3 playerDir = new Vector3(Mathf.Cos(playerRot), Mathf.Sin(playerRot), 0);
+        
+        if (verticalInput > 0.0f) {
+            velocity += playerDir * thrustCoeff * Time.deltaTime;
         }
-        else
-        {
-            engineAudioSource.volume = 0;
-            animator.Play("idle");
-        }
 
-        // apply limits.
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
-        rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -maxAngularVelocity, +maxAngularVelocity);
+        velocity = Vector3.ClampMagnitude( velocity, maxSpeed );
+
+        // set the volume based on velocity.
+        thrustSounder.volume = Vector3.Magnitude(velocity) / maxSpeed;
+
+        // use the vertical input to move along the current "forward" direction of the ship.
+        transform.position += velocity * Time.deltaTime;
+
+        float phaseDiff = -90;
+        transform.localRotation = Quaternion.Euler(0, 0, playerRot * Mathf.Rad2Deg + phaseDiff );
 
         if (Input.GetButtonDown(FIRE))
         {
@@ -82,17 +80,16 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        engineAudioSource.Play();
+        thrustSounder.Play();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (invulnerability <= 0 && collision.gameObject.CompareTag("Asteroid"))
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = 0f;
+            //rb.velocity = Vector3.zero;
+           // rb.angularVelocity = 0f;
             gameManager.PlayerDeathNotify(this);
         }
     }
-
 }

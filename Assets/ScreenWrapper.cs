@@ -8,7 +8,7 @@ public class ScreenWrapper : MonoBehaviour
 
     void Update()
     {
-        Vector2 dim = Game::GetScreenDim();
+       Vector2 dim = Game.GetScreenDim();
        float screenWidth = dim.x + margin;
        float screenHeight = dim.y + margin;
 
