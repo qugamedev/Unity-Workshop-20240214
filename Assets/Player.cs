@@ -18,11 +18,6 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public float invulnerability;
 
-    //the name of the inputs as defined in project settings
-    public string HORIZONTAL_AXIS = "Horizontal";
-    public string VERTICAL_AXIS = "Vertical";
-    public string FIRE = "Fire1";
-
     //to control engine sound and effects independently I use two audio sources
     public AudioSource effectsAudioSource;
 
@@ -68,7 +63,7 @@ public class Player : MonoBehaviour
         float phaseDiff = -90;
         transform.localRotation = Quaternion.Euler(0, 0, playerRot * Mathf.Rad2Deg + phaseDiff );
 
-        if (Input.GetButtonDown(FIRE))
+        if (Input.GetButtonDown("Fire1"))
         {
             Vector3 bulletPosition = transform.position + transform.up * 0.2f;
             GameObject newBullet = Instantiate(bulletPrefab, bulletPosition, transform.rotation);
