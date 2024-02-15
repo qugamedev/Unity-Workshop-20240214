@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour
 {
     public new Rigidbody2D rigidbody { get; private set; }
     public float speed = 500f;
-    public float life = 10f;
+    public float life = 20f;
 
     private void Start()
     {

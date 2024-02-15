@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
     public AudioClip mediumExplosionSound;
     public AudioClip bigExplosionSound;
 
-    private Vector2 GetScreenDim()
+    static public Vector2 GetScreenDim()
     {
         // this is the width of the screen in world units (it depends on the camera settings)
         float screenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2;
@@ -58,8 +58,8 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        scoreText.text = score.ToString();
-        livesText.text = lives.ToString();
+        scoreText.text = "score: " + score.ToString();
+        livesText.text = "lives: " + lives.ToString();
 
         gameOverUI.SetActive(false);
         SpawnPlayer();
